@@ -96,7 +96,7 @@ const LoginPage = () => {
         <p>
           ¿No tienes una cuenta?{" "}
           <Link to="/auth/register" className="font-bold hover:underline">
-            Registrate
+            Regístrate
           </Link>
         </p>
       </div>
