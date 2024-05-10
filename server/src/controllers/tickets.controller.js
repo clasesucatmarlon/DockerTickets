@@ -40,8 +40,6 @@ export class TicketController {
             // LISTA DE USUARIOS QUE TIENEN PERMISO DE SUPPORT PARA LUEGO ENVIARLES EMAIL CON NUEVO TICKET CREADO
             const usersSupport = await User.find({ permissions: { $in: "support" } });
 
-            // TODO: ENVIAR EMAIL A LOS USUARIOS DE SUPPORT
-            // ENVIAR EMAIL A LOS USUSRIOS DE SUPPORT
             if (usersSupport) {
                 usersSupport.map(async (support) => {
                     await TicketEmail.createTicket({
@@ -57,13 +55,6 @@ export class TicketController {
             res
                 .status(202)
                 .json({ response: "success", message: "Ticket creado correctamente", ticket });
-
-            // res.send({ message: "Ticket... ", Ticket: usersSupport })
-
-            usersSupport
-
-
-
         } catch (error) {
             console.log("[ERROR_CREATE_TICKET]", error);
             return res
@@ -71,4 +62,6 @@ export class TicketController {
                 .json({ response: "error", message: "Error del servidor" });
         }
     }
+
+    
 }
