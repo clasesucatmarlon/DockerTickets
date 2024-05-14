@@ -63,5 +63,46 @@ export class TicketController {
         }
     }
 
-    
+
+    // OBTENER TODOS LOS TICKETS
+    static getAllTickets = async (req, res) => {
+        try {
+            const { user } = req;
+            const { page } = req.body;
+
+            const limit = 5;
+
+            let tickets = [];
+
+            if (!user.permissions.includes("support")) {
+                tickets = await Ticket.find({ createdBy: user._id })
+                    .populate({
+                        path: "createdBy",
+                        model: "User",
+                        select: "-password -__v -updatedAt -isActive -isConfirmed",
+                    })
+                    .sort({ createdAt: "desc" })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+            } else {
+                tickets = await Ticket.find()
+                    .populate({
+                        path: "createdBy",
+                        model: "User",
+                        select: "-password -__v -updatedAt -isActive -isConfirmed",
+                    })
+                    .sort({ createdAt: "desc" })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+            }
+
+            res.status(200).json(tickets);
+        } catch (error) {
+            console.log(error);
+            return res
+                .status(500)
+                .json({ response: "error", message: "Error del servidor" });
+        }
+    };
+
 }
