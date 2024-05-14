@@ -105,4 +105,41 @@ export class TicketController {
         }
     };
 
+
+    // OBTENER TICKET POR ID
+    static getTicketByID = async (req, res) => {
+
+        try {
+            const { ticketId } = req.body;
+
+            if (!Types.ObjectId.isValid(ticketId)) {
+                return res
+                    .status(404)
+                    .json({ response: 'error', message: 'ID no válido' });
+            }
+
+            const ticket = await Ticket.find({ ticketId })
+                .populate({
+                    path: "createdBy",
+                    model: "User",
+                    select: "-password -__v -updatedAt -isActive -isConfirmed",
+                })
+
+            if (!ticket) {
+                return res.status(400).json({
+                    response: "error",
+                    message: "Ticket no encontrado",
+                });
+            }
+            return res.status(200).json(ticket);
+
+        } catch (error) {
+            console.log(error);
+            return res
+                .status(500)
+                .json({ response: "error", message: "Error del servidor" });
+        }
+
+    }
+
 }

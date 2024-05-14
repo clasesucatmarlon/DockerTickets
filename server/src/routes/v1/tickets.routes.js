@@ -6,4 +6,5 @@ import { checkAuth } from "../../middlewares/checkAuth.middleware.js";
 export const ticketsRoutes = express.Router();
 
 ticketsRoutes.post("/", checkAuth, TicketController.createTicket);
-ticketsRoutes.post("/get-all", checkAuth, TicketController.getAllTickets);
+ticketsRoutes.get("/", checkAuth, TicketController.getAllTickets);
+ticketsRoutes.get("/:ticketId", checkAuth, TicketController.getTicketByID);
