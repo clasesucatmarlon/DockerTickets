@@ -142,4 +142,9 @@ export class TicketController {
 
     }
 
+    // ACTUALIZAR TICKET
+    static updateTickets = async (req, res) => {
+        res.send("Ticket actualizado......");
+    }
+
 }

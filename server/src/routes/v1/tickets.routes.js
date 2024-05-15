@@ -8,3 +8,4 @@ export const ticketsRoutes = express.Router();
 ticketsRoutes.post("/", checkAuth, TicketController.createTicket);
 ticketsRoutes.get("/", checkAuth, TicketController.getAllTickets);
 ticketsRoutes.get("/:ticketId", checkAuth, TicketController.getTicketByID);
+ticketsRoutes.put("/:ticketId", checkAuth, TicketController.updateTickets);
